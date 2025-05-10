@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>閲覧数カウンター</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+    #counter {
+      font-size: 2em;
+      margin-top: 20px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ようこそ！</h1>
+  <p>このページの閲覧数:</p>
+  <div id="counter">0</div>
+
+  <script>
+    // ページを訪問した回数をローカルストレージに保存
+    if (localStorage.pageViews) {
+      localStorage.pageViews = Number(localStorage.pageViews) + 1;
+    } else {
+      localStorage.pageViews = 1;
+    }
+
+    // 保存された閲覧数を表示
+    document.getElementById('counter').textContent = localStorage.pageViews;
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<php
+// IPアドレス制限
+$allowed_ips = ['123.456.789.0'];
+if (!in_array($_SERVER['REMOTE_ADDR'], $allowed_ips)) {
+    die('アクセスが拒否されました。');
+}
+
+// フォームが送信された場合
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $date = $_POST['date'];
+    $title = $_POST['title'];
+    $content = nl2br(htmlspecialchars($_POST['content']));
+    $entry = "日時: $date\nタイトル: $title\n内容:\n$content\n\n";
+    file_put_contents('posts.txt', $entry, FILE_APPEND);
+    echo '投稿が保存されました。';
+}
+>
+
+<form method="post">
+    <label for="date">日時:</label>
+    <input type="datetime-local" id="date" name="date" required>
+    <label for="title">タイトル:</label>
+    <input type="text" id="title" name="title" required>
+    <label for="content">内容:</label>
+    <textarea id="content" name="content" required></textarea>
+    <input type="submit" value="投稿する">
+</form>

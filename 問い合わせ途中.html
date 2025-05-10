@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お問い合わせフォーム</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    form {
+      max-width: 500px;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    input[type="submit"] {
+      margin-top: 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>お問い合わせ</h1>
+
+  <form action="send.php" method="POST">
+    <label for="name">お名前（必須）</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="phone">電話番号（必須）</label>
+    <input type="tel" id="phone" name="phone" required placeholder="例: 03-1234-5678">
+
+    <label for="email">メールアドレス（任意）</label>
+    <input type="email" id="email" name="email" placeholder="例: example@example.com">
+
+    <label for="message">お問い合わせ内容（必須）</label>
+    <textarea id="message" name="message" rows="5" required></textarea>
+
+    <label>
+      <input type="checkbox" name="agree" required> 個人情報の取り扱いに同意する
+    </label>
+
+    <input type="submit" value="送信">
+  </form>
+
+</body>
+</html>

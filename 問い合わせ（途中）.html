@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>お問い合わせフォーム</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .container h2 {
+      margin-bottom: 20px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 12px;
+      width: 100%;
+      background-color: #28a745;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    .thanks-message {
+      display: none;
+      font-size: 18px;
+      color: #28a745;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <form id="contact-form">
+      <h2>お問い合わせ</h2>
+      <input type="text" name="name" placeholder="お名前" required>
+      <input type="email" name="email" placeholder="メールアドレス" required>
+      <textarea name="message" rows="5" placeholder="メッセージを入力してください..." required></textarea>
+      <button type="submit">送信</button>
+    </form>
+
+    <div class="thanks-message" id="thanks-message">
+      お問い合わせありがとうございます！メッセージは送信されました。
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("contact-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // フォーム送信をブロック
+      // フォーム内容の取得
+      const formData = new FormData(this);
+      const formProps = Object.fromEntries(formData);
+
+      // フォームを Formsubmit に送信（外部サービス）
+      fetch("https://formsubmit.co/ajax/taba002900@gmail.com", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formProps)
+      })
+      .then(response => {
+        if (response.ok) {
+          document.getElementById("contact-form").style.display = "none";
+          document.getElementById("thanks-message").style.display = "block";
+        } else {
+          alert("送信に失敗しました。もう一度お試しください。");
+        }
+      })
+      .catch(error => {
+        alert("エラーが発生しました: " + error.message);
+      });
+    });
+  </script>
+
+</body>
+</html>

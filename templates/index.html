@@ -1,0 +1,7 @@
+<h1>ブログ一覧</h1>
+<a href="/post">新しい記事を書く</a>
+{% for post in posts %}
+  <hr>
+  <h2>{{ post[1] }}</h2>
+  <p>{{ post[2] }}</p>
+{% endfor %}

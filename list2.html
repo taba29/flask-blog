@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>アニメーションまとめページ</title>
+
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.0/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.0/ScrollTrigger.min.js"></script>
+
+  <!-- Anime.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", sans-serif;
+      background: #f0f8ff;
+      padding: 0;
+    }
+
+    .header {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: linear-gradient(to right, #dfe9f3, #ffffff);
+    }
+
+    .char {
+      font-size: 2rem;
+      font-weight: bold;
+      display: inline-block;
+      opacity: 0;
+    }
+
+    .scroll-box {
+      margin: 100vh auto;
+      background: white;
+      padding: 40px;
+      max-width: 600px;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background: #007acc;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #005a99;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 文字エフェクト -->
+  <div class="header" id="header">
+    <div id="animated-text">
+      <span class="char">よ</span>
+      <span class="char">う</span>
+      <span class="char">こ</span>
+      <span class="char">そ</span>
+      <span class="char">！</span>
+    </div>
+  </div>
+
+  <!-- スクロールで表示 -->
+  <div class="scroll-box" id="scrollBox">
+    <h2>スクロールして表示されたよ</h2>
+    <p>このボックスはスクロール位置でスライドインします。</p>
+    <p id="msg">ここをクリックで変化</p>
+    <button onclick="changeText()">クリックしてみて</button>
+  </div>
+
+  <script>
+    // Anime.js 文字の跳ねる表示
+    anime.timeline()
+      .add({
+        targets: '#animated-text .char',
+        translateY: [50, 0],
+        opacity: [0, 1],
+        delay: anime.stagger(200),
+        easing: 'easeOutBounce',
+        duration: 800
+      });
+
+    // GSAP + ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.to("#scrollBox", {
+      scrollTrigger: {
+        trigger: "#scrollBox",
+        start: "top 80%",
+        toggleActions: "play none none none"
+      },
+      opacity: 1,
+      x: 0,
+      duration: 1.2,
+      ease: "power2.out"
+    });
+
+    // JavaScript: クリックでメッセージ変化
+    function changeText() {
+      const msg = document.getElementById("msg");
+      msg.textContent = "アニメーションが統合されました！";
+    }
+  </script>
+</body>
+</html>
