@@ -14,6 +14,9 @@ def init_db():
             )
         ''')
 
+# ✅ アプリ起動時に必ず実行（Renderでも確実）
+init_db()
+
 @app.route('/')
 def index():
     with sqlite3.connect('blog.db') as conn:
@@ -31,5 +34,4 @@ def post():
     return render_template('post.html')
 
 if __name__ == '__main__':
-    init_db()
     app.run(debug=True)
