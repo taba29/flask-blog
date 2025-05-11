@@ -3,7 +3,7 @@ import sqlite3
 
 app = Flask(__name__)
 
-# DB初期化
+# DB初期化 (最初に1回だけ呼び出されるように修正)
 def init_db():
     with sqlite3.connect('blog.db') as conn:
         conn.execute('''
@@ -14,11 +14,14 @@ def init_db():
             )
         ''')
 
-# ✅ アプリ起動時に必ず実行（Renderでも確実）
-init_db()
+# 最初のリクエスト前にDBを初期化する
+@app.before_first_request
+def setup():
+    init_db()
 
 @app.route('/')
 def index():
+    # 投稿を取得する前にDBが初期化されていることを確認
     with sqlite3.connect('blog.db') as conn:
         posts = conn.execute('SELECT * FROM posts ORDER BY id DESC').fetchall()
     return render_template('index.html', posts=posts)
